@@ -62,20 +62,52 @@ mt3600be-setup/
 
 ## 直接当脚本用
 
-不装 skill 也行，脚本本身是独立的 POSIX sh：
+不装 skill 也行，脚本本身是独立的 POSIX sh。下面按在终端里一行一行输入的顺序来讲，看不懂的命令照抄即可。
+
+**准备**：打开终端，先进入你克隆下来的项目文件夹（路径按你的实际位置改，例如全局 skill 目录）：
 
 ```sh
-export MT3600BE_TARGET=root@192.168.8.1
-export MT3600BE_SSH_KEY=~/.ssh/id_ed25519      # 留空则用密码
+cd ~/.claude/skills/mt3600be-setup
+```
 
+**第 1 步 · 设置两个环境变量**——告诉脚本要连哪台路由器、用哪个密钥。每次新开一个终端窗口，都要先把这两行跑一遍：
+
+```sh
+# 路由器的登录地址。root@ 后面是路由器 IP，GL.iNet 出厂默认就是 192.168.8.1，一般不用改
+export MT3600BE_TARGET=root@192.168.8.1
+
+# 登录用的 SSH 私钥路径。如果你还没配过密钥、想用密码登录，把这一行整行删掉即可（脚本会提示你输密码）
+export MT3600BE_SSH_KEY=~/.ssh/id_ed25519
+```
+
+**第 2 步 · 装公钥，实现免密码登录**（第一次会提示你输一次路由器管理密码）：
+
+```sh
 sh scripts/install-ssh-key.sh ~/.ssh/id_ed25519.pub
-sh scripts/set-fan-temperature.sh status
-sh scripts/set-fan-temperature.sh 50
-sh scripts/patch-fan-range-ui.sh status
-sh scripts/patch-fan-range-ui.sh apply 40 70
-sh scripts/patch-fan-range-ui.sh restore
+```
+
+**第 3 步 · 查看 / 设置风扇启动温度**：
+
+```sh
+sh scripts/set-fan-temperature.sh status    # 只读：先看当前设置
+sh scripts/set-fan-temperature.sh 50        # 把风扇启动温度设成 50℃
+```
+
+**第 4 步 · 改风扇滑块的可调范围**（会修改路由器网页）：
+
+```sh
+sh scripts/patch-fan-range-ui.sh status        # 只读：看当前补丁状态
+sh scripts/patch-fan-range-ui.sh apply 40 70   # 把滑块范围改成 40–70℃
+sh scripts/patch-fan-range-ui.sh restore       # 想撤销时：一键还原
+```
+
+**第 5 步 · 放行拨动开关设置页**（可选，会修改路由器网页）：
+
+```sh
 sh scripts/patch-switch-button-ui.sh apply myservice "My Service"
 ```
+
+> 第 3–5 步是按需选用的，不必全跑。带 `status` 的都是只读、可以放心先试；带 `apply` 的才会真正改动路由器，且都能用 `status` 查看、`restore` 还原。
 
 **本机需要**：`ssh`、`scp`（OpenSSH ≥ 8.6，为了 `-O`；更旧的设 `MT3600BE_SCP_COMPAT=`）、`perl`、`gzip`、`sha256sum` 或 `shasum`。macOS 和主流 Linux 发行版默认都有。
 
