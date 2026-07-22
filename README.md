@@ -1,7 +1,7 @@
 # mt3600be-setup
 
 给 **GL.iNet GL-MT3600BE** 用的开箱设置 skill（Claude Code / Claude Agent SDK）。
-装好之后跟 Claude 说一句「帮我做 MT3600BE 开箱设置」，它会先列一份可选项清单，你挑编号，它再动手。
+克隆到本地后跟 Claude （或其他AI Agent） 说一句「帮我做 MT3600BE 开箱设置」，它会先列一份可选项清单，你挑编号，它再动手。
 
 大部分项目对其他 GL.iNet 4.x 机型同样适用；**前端补丁类项目只在 GL 固件 v4.9.0 上实测过。**
 
