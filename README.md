@@ -25,15 +25,19 @@
 
 ## 安装
 
-放到任意一处 Claude Code 会扫描的 skills 目录：
+克隆到任意一处 Claude Code 会扫描的 skills 目录。**目录名要用 `mt3600be-setup`**（与 SKILL.md 里的 `name` 一致）：
 
 ```sh
 # 全局可用
-cp -R mt3600be-setup ~/.claude/skills/
-
-# 或只在某个项目里可用
-cp -R mt3600be-setup /path/to/project/.claude/skills/
+git clone https://github.com/bdhwrsh/gl-mt3600be-setup.git ~/.claude/skills/mt3600be-setup
 ```
+
+```sh
+# 或只在某个项目里可用
+git clone https://github.com/bdhwrsh/gl-mt3600be-setup.git /path/to/project/.claude/skills/mt3600be-setup
+```
+
+装好后跟 Claude 说「帮我做 MT3600BE 开箱设置」即可。更新用 `git pull`。
 
 目录结构：
 
