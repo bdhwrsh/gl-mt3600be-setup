@@ -37,7 +37,7 @@ git clone https://github.com/bdhwrsh/gl-mt3600be-setup.git ~/.claude/skills/mt36
 git clone https://github.com/bdhwrsh/gl-mt3600be-setup.git ~/Desktop/mt3600be-setup
 ```
 
-装好后跟 Claude 说「帮我做 MT3600BE 开箱设置」即可。更新用 `git pull`。
+装好后跟 Claude 说「帮我做 MT3600BE 开箱设置」即可。
 
 目录结构：
 
