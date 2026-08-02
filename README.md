@@ -3,7 +3,7 @@
 给 **GL.iNet GL-MT3600BE** 用的开箱设置 skill（Claude Code / Claude Agent SDK）。
 克隆到本地后跟 Claude （或其他AI Agent） 说一句「帮我做 MT3600BE 开箱设置」，它会先列一份可选项清单，你挑编号，它再动手。
 
-大部分项目对其他 GL.iNet 4.x 机型同样适用；**前端补丁类项目只在 GL 固件 v4.9.0 上实测过。**
+大部分条目对其他 GL.iNet 4.x 机型同样适用；**前端补丁类项目只在 GL 固件 v4.9.0 上实测过。**
 
 ## 能做什么
 
@@ -23,21 +23,30 @@
 
 **第 1 项要做就必须最先做**：它改的是 flash 里的 factory 数据，不随固件走，改完建议恢复出厂让地区相关配置重新生成——开箱阶段做代价为零，等你把 Wi-Fi 和插件都配好了再改就得重来一遍。这一项**故意没有做成一键脚本**：每一步都有验证闸门（型号校验 → 整分区备份到本地并核对哈希 → 目标偏移必须恰好读到 `CN` → 写后回读必须是 `US`），读到的东西不对就停。
 
-## 安装
+## 推荐用法（作为Skills）
 
-克隆到本地 Claude Code 会扫描的技能目录。目录名必须为 `mt3600be-setup`（与 SKILL.md 中的 `name` 保持一致）：
+克隆到电脑中的 Claude Code 技能目录。目录名必须为 `mt3600be-setup`（与 SKILL.md 中的 `name` 保持一致）
+
+打开终端：
 
 ```sh
-# 克隆到 Claude 全局 skills 文件夹
+# 克隆到 Claude 默认全局 skills 文件夹
 git clone https://github.com/bdhwrsh/gl-mt3600be-setup.git ~/.claude/skills/mt3600be-setup
 ```
-
 ```sh
-# 或使用其他 agent，暂存到桌面，手动移动到工作区
+# 克隆到 Claude 默认全局 skills 文件夹（如GitHub网络不通,使用反代地址）
+git clone https://ghfast.top/https://github.com/bdhwrsh/gl-mt3600be-setup.git ~/.claude/skills/mt3600be-setup
+```
+```sh
+# 或克隆到桌面，然后指示你的AI助手读取这个文件的内容
 git clone https://github.com/bdhwrsh/gl-mt3600be-setup.git ~/Desktop/mt3600be-setup
 ```
-
-装好后跟 Claude 说「帮我做 MT3600BE 开箱设置」即可。
+```sh
+# 或克隆到桌面，然后指示你的AI助手读取这个文件的内容（如GitHub网络不通,使用反代地址）【小白看这里 忽视以上三条即可】
+git clone https://ghfast.top/https://github.com/bdhwrsh/gl-mt3600be-setup.git ~/Desktop/mt3600be-setup
+```
+文件很小，秒下完。打开你的AI Agent，把文件夹'mt3600be-setup'拖进去 并说「读取skill：mt3600be-setup内容，帮我做 MT3600BE 开箱设置」即可。
+skill文件结构清晰，即使不太聪明的AI Agent也能看懂。
 
 目录结构：
 
@@ -59,8 +68,10 @@ mt3600be-setup/
     ├── patch-switch-button-ui.sh
     └── switch-handler-template.sh # 路由器侧模板
 ```
+接下来就是根据AI提示进行傻瓜操作了，不再赘述。
 
-## 直接当脚本用
+
+## 直接当脚本用（有一定基础玩家）
 
 不装 skill 也行，脚本本身是独立的 POSIX sh。下面按在终端里一行一行输入的顺序来讲，看不懂的命令照抄即可。
 
